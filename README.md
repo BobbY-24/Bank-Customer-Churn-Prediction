@@ -88,7 +88,7 @@ Trained a Random Forest Classifier for churn prediction.
 Model Results on Test Set:
 
 
-Accuracy: ~0.84
+Accuracy: ~0.857
 
 
 Precision, Recall, F1-score show:
