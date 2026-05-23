@@ -1,7 +1,7 @@
 # Bank Customer Churn Prediction
 
 ## Overview
-This project builds a supervised machine learning pipeline to predict whether a bank customer is likely to churn. It combines exploratory data analysis, feature preprocessing, dimensionality exploration with PCA, and Random Forest classification. The goal is to understand which customer attributes are associated with churn and evaluate how well a nonlinear model can identify at-risk customers.
+I built a supervised machine learning pipeline to predict whether a bank customer is likely to churn. It combines exploratory data analysis, feature preprocessing, dimensionality exploration with PCA, and Random Forest classification. My goal is to understand which customer attributes are associated with churn and evaluate how well a nonlinear model can identify at-risk customers.
 
 ## Motivation
 Customer churn prediction is a practical classification problem with business and statistical relevance. For a data science portfolio, this project demonstrates end-to-end work with tabular data: cleaning, visualization, categorical encoding, model training, evaluation, and interpretation. It also highlights an important modeling lesson: high overall accuracy can hide weaker performance on the minority class.
@@ -43,8 +43,8 @@ The model performs much better on non-churned customers than churned customers, 
 - Accuracy alone is not sufficient for churn modeling because the minority churn class is harder to detect.
 
 ## Limitations
-- The notebook uses a single train/test split rather than cross-validation.
-- The project does not yet tune hyperparameters or compare several model families.
+- I use a single train/test split rather than cross-validation.
+- I do not yet tune hyperparameters or compare several model families.
 - The dataset does not include temporal customer history, marketing interventions, or economic context.
 - The model is descriptive and predictive; it does not prove causal drivers of churn.
 - Minority-class recall is modest, so the model would need additional work before operational use.
@@ -66,4 +66,4 @@ pip install -r requirements.txt
 jupyter notebook notebooks/bank_customer_churn_prediction.ipynb
 ```
 
-Run the notebook cells from top to bottom. The notebook expects the dataset at `data/Churn_Modelling.csv`.
+Run my notebook cells from top to bottom. I expect the dataset at `data/Churn_Modelling.csv`.
