@@ -1,162 +1,69 @@
-Bank Customer Churn Prediction
-Project Overview
-This project analyzes bank customer data to predict customer churn — when a customer closes their account. Accurately predicting churn helps banks take proactive measures to retain clients and improve business outcomes.
-The project includes data exploration, visualization, PCA, feature correlation analysis, and predictive modeling using Random Forest classifiers.
-
-Dataset
-The dataset is from Kaggle: Churn Modelling Dataset and contains:
-CreditScore
-
-
-Geography
-
-
-Gender
-
-
-Age
-
-
-Tenure
-
-
-Balance
-
-
-NumOfProducts
-
-
-HasCrCard
-
-
-IsActiveMember
-
-
-EstimatedSalary
-
-
-Exited (target variable: 1 = churned, 0 = stayed)
-
-
-
-Key Steps
-1. Data Exploration
-Examined basic statistics and data types.
-
-
-Visualized distributions of Age, CreditScore, Balance, and other numeric features.
-
-
-Compared churn rates across Gender and Geography.
-
-
-Generated a correlation heatmap for numeric features.
-
-
-2. Insights from Correlation Analysis
-Age vs. Exited: weak-to-moderate positive correlation (~0.29) → older customers slightly more likely to churn.
-
-
-Number of Products vs. Exited: weak-to-moderate negative correlation (~–0.30) → customers with more products are slightly less likely to churn.
-
-
-Other numeric features show weak correlations with churn.
-
-
-Interpretation: Churn is influenced by multiple factors; no single variable dominates. Nonlinear models like Random Forest can capture interactions better than linear models.
-3. Principal Component Analysis (PCA)
-Standardized numeric features and reduced dimensions.
-
-
-Explained variance of the first 2 components: ~23.7% → low, indicating variance is spread across many features.
-
-
-Cumulative explained variance plot shows a roughly constant positive slope → each feature contributes similarly to variance.
-
-
-Implication: PCA is useful for visualization but not ideal for compressing data without losing information. Random Forest handles this high-dimensional structure naturally.
-4. Machine Learning Modeling
-One-hot encoded categorical features.
-
-
-Scaled numeric features using StandardScaler.
-
-
-Trained a Random Forest Classifier for churn prediction.
-
-
-Model Results on Test Set:
-
-
-Accuracy: ~0.857
-
-
-Precision, Recall, F1-score show:
-
-
-High accuracy for non-churned customers
-
-
-Moderate performance for predicting churned customers (common in imbalanced datasets)
-
-
-Feature importance analysis revealed Age, Balance, and NumOfProducts as the most influential variables.
-
-
-Interpretation: The Random Forest model performs well given weak linear correlations, leveraging nonlinear relationships and feature interactions to detect churn.
-5. Visualization
-Histograms, count plots, and heatmaps to explore data distributions and correlations.
-
-
-PCA scatter plots for visualizing customer clusters.
-
-
-Feature importance plots to interpret model decisions.
-
-
-
-Usage
-Clone the repository.
-
-
-Place the dataset Churn_Modelling.csv in the working folder.
-
-
-Run the Jupyter Notebook Churn_Prediction.ipynb.
-
-
-Explore visualizations and model evaluation results.
-
-
-
-Requirements
-pandas
-numpy
-matplotlib
-seaborn
-plotly
-scikit-learn
-ipywidgets
-
-Install using:
-pip install pandas numpy matplotlib seaborn plotly scikit-learn ipywidgets
-
-
-Key Insights
-Older customers are slightly more likely to churn.
-
-
-Customers with more products are slightly less likely to churn.
-
-
-Variance in the dataset is distributed across many features (PCA slope ≈ constant).
-
-
-Random Forest performs well because it captures nonlinear interactions among multiple variables, even when individual correlations are weak.
-
-
-Feature engineering and interaction terms may further improve predictive performance.
-
-
-Model results: ~84% test accuracy, good prediction for non-churned customers, moderate for churned customers.
-
+# Bank Customer Churn Prediction
+
+## Overview
+This project builds a supervised machine learning pipeline to predict whether a bank customer is likely to churn. It combines exploratory data analysis, feature preprocessing, dimensionality exploration with PCA, and Random Forest classification. The goal is to understand which customer attributes are associated with churn and evaluate how well a nonlinear model can identify at-risk customers.
+
+## Motivation
+Customer churn prediction is a practical classification problem with business and statistical relevance. For a data science portfolio, this project demonstrates end-to-end work with tabular data: cleaning, visualization, categorical encoding, model training, evaluation, and interpretation. It also highlights an important modeling lesson: high overall accuracy can hide weaker performance on the minority class.
+
+## Dataset
+- **Source:** Kaggle Churn Modelling dataset.
+- **File:** `data/Churn_Modelling.csv`
+- **Size:** 10,000 customer records and 14 columns.
+- **Target variable:** `Exited`, where `1` indicates the customer churned and `0` indicates the customer stayed.
+- **Important features:** `CreditScore`, `Geography`, `Gender`, `Age`, `Tenure`, `Balance`, `NumOfProducts`, `HasCrCard`, `IsActiveMember`, and `EstimatedSalary`.
+- **Known limitations:** The dataset is a simplified public benchmark. It may not represent real bank populations, time-varying customer behavior, intervention effects, or production data drift.
+
+## Methods
+- Loaded and inspected the customer churn dataset with pandas.
+- Explored numeric and categorical feature distributions using matplotlib, seaborn, and Plotly.
+- Examined churn rates across demographic and account-related variables.
+- One-hot encoded categorical features and scaled numeric features.
+- Used PCA to inspect variance structure and determine whether dimensionality reduction was informative.
+- Trained a Random Forest classifier for churn prediction.
+- Evaluated the model with accuracy, precision, recall, F1-score, and a classification report.
+
+## Results
+The Random Forest model achieved approximately **85.7% test accuracy**.
+
+Classification report from the notebook:
+
+| Class | Precision | Recall | F1-score | Support |
+| --- | ---: | ---: | ---: | ---: |
+| Stayed (`0`) | 0.86 | 0.98 | 0.92 | 1607 |
+| Churned (`1`) | 0.84 | 0.34 | 0.48 | 393 |
+
+The model performs much better on non-churned customers than churned customers, which is expected for an imbalanced churn dataset. This makes recall for churned customers a key improvement target.
+
+## Key Insights
+- Age has a weak-to-moderate positive relationship with churn in this dataset.
+- Customers with more products are less likely to churn, based on the observed correlation and model importance.
+- PCA explained limited variance in the first two components, suggesting that the signal is distributed across multiple features.
+- Random Forest can capture nonlinear interactions that are not visible in simple correlation analysis.
+- Accuracy alone is not sufficient for churn modeling because the minority churn class is harder to detect.
+
+## Limitations
+- The notebook uses a single train/test split rather than cross-validation.
+- The project does not yet tune hyperparameters or compare several model families.
+- The dataset does not include temporal customer history, marketing interventions, or economic context.
+- The model is descriptive and predictive; it does not prove causal drivers of churn.
+- Minority-class recall is modest, so the model would need additional work before operational use.
+
+## Future Improvements
+- Add cross-validation and confidence intervals for model metrics.
+- Tune Random Forest hyperparameters and compare with logistic regression, XGBoost, or LightGBM.
+- Add class weighting, threshold tuning, or resampling to improve churn recall.
+- Create a compact `src/` training script after the notebook workflow is finalized.
+- Add a short model card describing intended use and limitations.
+
+## How to Run
+```bash
+git clone https://github.com/BobbY-24/Bank-Customer-Churn-Prediction.git
+cd Bank-Customer-Churn-Prediction
+python -m venv .venv
+source .venv/bin/activate  # macOS/Linux
+pip install -r requirements.txt
+jupyter notebook notebooks/bank_customer_churn_prediction.ipynb
+```
+
+Run the notebook cells from top to bottom. The notebook expects the dataset at `data/Churn_Modelling.csv`.
